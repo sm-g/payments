@@ -1,0 +1,45 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:prop="clr-namespace:PaymentsWpfApplication.Properties"
+             xmlns:Converters="clr-namespace:PaymentsWpfApplication.Converters"
+             x:Class="PaymentsWpfApplication.Controls.SexChooser"
+             mc:Ignorable="d"
+             d:DesignHeight="20"
+             d:DesignWidth="300"
+             MaxWidth="400">
+
+    <UserControl.Resources>
+        <Converters:SexToBoolConverter x:Key="SexToBoolConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type RadioButton}"
+                   BasedOn="{StaticResource editorRadio}" />
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <RadioButton Grid.Column="0"
+                     x:Name="male"
+                     Content="{x:Static prop:Resources.ControlSexMan}"
+                     IsChecked="{Binding Sex, Converter={StaticResource SexToBoolConverter}, ConverterParameter=male}" />
+        <RadioButton Grid.Column="1"
+                     x:Name="female"
+                     Content="{x:Static prop:Resources.ControlSexWoman}"
+                     IsChecked="{Binding Sex, Converter={StaticResource SexToBoolConverter}, ConverterParameter=female}" />
+        <RadioButton Grid.Column="2"
+                     x:Name="unk"
+                     Content="{x:Static prop:Resources.ControlSexUnknown}"
+                     IsChecked="{Binding Sex, Converter={StaticResource SexToBoolConverter}, ConverterParameter=unk}" />
+        <RadioButton Grid.Column="3"
+                     x:Name="not"
+                     Content="{x:Static prop:Resources.ControlSexNotAppl}"
+                     IsChecked="{Binding Sex, Converter={StaticResource SexToBoolConverter}, ConverterParameter=not}" />
+    </Grid>
+</UserControl>

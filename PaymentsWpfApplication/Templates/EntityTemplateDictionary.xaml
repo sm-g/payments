@@ -1,0 +1,426 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:prop="clr-namespace:PaymentsWpfApplication.Properties"
+                    xmlns:templates="clr-namespace:PaymentsWpfApplication.Templates"
+                    xmlns:model="clr-namespace:Payments.Model;assembly=Payments.Model"
+                    xmlns:ev="clr-namespace:PaymentsWpfApplication.EntityViews"
+                    xmlns:data="clr-namespace:Payments.Data;assembly=Payments.Data"
+>
+    <!-- Region Entity editors -->
+
+    <DataTemplate DataType="{x:Type data:Settlement}">
+        <ev:SettlementEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:Street}">
+        <ev:StreetEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:House}">
+        <ev:HouseEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:Flat}">
+        <ev:FlatEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:FlatType}">
+        <ev:FlatTypeEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:Meter}">
+        <ev:MeterEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:MeterType}">
+        <ev:MeterTypeEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:Benefit}">
+        <ev:BenefitEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:ServiceType}">
+        <ev:ServiceTypeEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:Unit}">
+        <ev:UnitEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:User}">
+        <ev:UserEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:StreetType}">
+        <ev:StreetTypeEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:Payer}">
+        <ev:PayerEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:Reading}">
+        <ev:ReadingEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:Registration}">
+        <ev:RegistrationEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:Service}">
+        <ev:ServiceEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:Rate}">
+        <ev:RateEditor />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type data:Payment}">
+        <ev:PaymentEditor />
+    </DataTemplate>
+
+    <!-- EndRegion -->
+
+    <!-- Region Entity templates -->
+    <DataTemplate x:Key="SettlementTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock Text="{Binding Name}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="StreetTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock Text="{Binding StreetType.Suffix, Converter={StaticResource trimConverter}, FallbackValue=''}" />
+                <TextBlock Text="{Binding Name}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="HouseTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock Text="{x:Static prop:Resources.ShortHouse}" />
+                <TextBlock Text="{Binding Number}" />
+                <TextBlock Text="{x:Static prop:Resources.ShortBuilding}"
+                           Visibility="{Binding Building,
+                                        Converter={StaticResource isNullToVisConverter}}" />
+                <TextBlock Text="{Binding Building}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="FlatTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock Text="{x:Static prop:Resources.ShortFlat}" />
+                <TextBlock Text="{Binding Number}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="FlatTypeTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock Text="{Binding Name}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="StreetTypeTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock Text="{Binding Fullname}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MeterTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock Text="{Binding MeterType.Name, StringFormat='{}{0}, '}" />
+                <TextBlock Text="{x:Static prop:Resources.ShortHouse}" />
+                <TextBlock Text="{Binding Registration.Flat.House.Number}" />
+                <TextBlock Text="{x:Static prop:Resources.ShortBuilding}" />
+                <TextBlock Text="{Binding Registration.Flat.House.Building}" />
+                <TextBlock Text="{x:Static prop:Resources.ShortFlat}" />
+                <TextBlock Text="{Binding Registration.Flat.Number, StringFormat='{}{0}, '}" />
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} {1}.">
+                            <Binding Path="Registration.Payer.LastName" />
+                            <Binding Path="Registration.Payer.FirstName[0]" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Text="{Binding Registration.Payer.MiddleName[0], StringFormat='{}{0}.', FallbackValue=''}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MeterTypeTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock Text="{Binding Name}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ServiceTypeTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock Text="{Binding Name}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="BenefitTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock Text="{Binding Name}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="UnitTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock Text="{Binding Fullname}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="UserTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock Text="{Binding Login}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="PayerTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} {1}.">
+                            <Binding Path="LastName" />
+                            <Binding Path="FirstName[0]" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Text="{Binding MiddleName[0], StringFormat='{}{0}.', FallbackValue=''}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ReadingTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0:d} {1}, {2} ">
+                            <Binding Path="Date" />
+                            <Binding Path="Value" />
+                            <Binding Path="Meter.MeterType.Unit.Name" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Text="{x:Static prop:Resources.ShortHouse}" />
+                <TextBlock Text="{Binding Meter.Registration.Flat.House.Number}" />
+                <TextBlock Text="{x:Static prop:Resources.ShortBuilding}" />
+                <TextBlock Text="{Binding Meter.Registration.Flat.House.Building}" />
+                <TextBlock Text="{x:Static prop:Resources.ShortFlat}" />
+                <TextBlock Text="{Binding Meter.Registration.Flat.Number, StringFormat='{}{0}, '}" />
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} {1}.">
+                            <Binding Path="Meter.Registration.Payer.LastName" />
+                            <Binding Path="Meter.Registration.Payer.FirstName[0]" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Text="{Binding Meter.Registration.Payer.MiddleName[0], StringFormat='{}{0}.', FallbackValue=''}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="RegistrationTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock Text="{x:Static prop:Resources.ShortHouse}" />
+                <TextBlock Text="{Binding Flat.House.Number}" />
+                <TextBlock Text="{x:Static prop:Resources.ShortBuilding}" />
+                <TextBlock Text="{Binding Flat.House.Building}" />
+                <TextBlock Text="{x:Static prop:Resources.ShortFlat}" />
+                <TextBlock Text="{Binding Flat.Number, StringFormat='{}{0} — '}" />
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} {1}.">
+                            <Binding Path="Payer.LastName" />
+                            <Binding Path="Payer.FirstName[0]" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Text="{Binding Payer.MiddleName[0], StringFormat='{}{0}.', FallbackValue=''}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ServiceTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock Text="{Binding Name}" />
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="RateTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}: {1}, {2}, {3}">
+                            <Binding Path="Name" />
+                            <Binding Path="Service.Name" />
+                            <Binding Path="Benefit.Name" />
+                            <Binding Path="FlatType.Name" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="PaymentTemplate">
+        <TextBlock>
+            <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}" CommandParameter="{Binding}">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}: {1}, {2:MMM yyyy}">
+                            <Binding Path="Service.Name" />
+                            <Binding Path="Amount" />
+                            <Binding Path="TargetMonth" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="NullEntityTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding DataContext.Type, ElementName=root}" />
+        </StackPanel>
+    </DataTemplate>
+
+    <templates:EntityTemplateSelector
+            x:Key="entityTemplateSelector"
+            SettlementTemplate="{StaticResource SettlementTemplate}"
+            StreetTemplate="{StaticResource StreetTemplate}"
+            HouseTemplate="{StaticResource HouseTemplate}"
+            FlatTemplate="{StaticResource FlatTemplate}"
+            FlatTypeTemplate="{StaticResource FlatTypeTemplate}"
+            StreetTypeTemplate="{StaticResource StreetTypeTemplate}"
+            MeterTemplate="{StaticResource MeterTemplate}"
+            MeterTypeTemplate="{StaticResource MeterTypeTemplate}"
+            BenefitTemplate="{StaticResource BenefitTemplate}"
+            PayerTemplate="{StaticResource PayerTemplate}"
+            UnitTemplate="{StaticResource UnitTemplate}"
+            ReadingTemplate="{StaticResource ReadingTemplate}"
+            RegistrationTemplate="{StaticResource RegistrationTemplate}"
+            ServiceTypeTemplate="{StaticResource ServiceTypeTemplate}"
+            ServiceTemplate="{StaticResource ServiceTemplate}"
+            UserTemplate="{StaticResource UserTemplate}"
+            RateTemplate="{StaticResource RateTemplate}"
+            PaymentTemplate="{StaticResource PaymentTemplate}"
+
+            NullEntityTemplate="{StaticResource NullEntityTemplate}" />
+
+    <!-- EndRegion -->
+
+    <!-- Region Collection grids -->
+
+    <DataTemplate x:Key="SettlemetsGridTemplate">
+        <ev:SettlementView />
+    </DataTemplate>
+    <DataTemplate x:Key="StreetsGridTemplate">
+        <ev:StreetView />
+    </DataTemplate>
+    <DataTemplate x:Key="HousesGridTemplate">
+        <ev:HouseView />
+    </DataTemplate>
+    <DataTemplate x:Key="FlatsGridTemplate">
+        <ev:FlatView />
+    </DataTemplate>
+    <DataTemplate x:Key="FlatTypesGridTemplate">
+        <ev:FlatTypeView />
+    </DataTemplate>
+    <DataTemplate x:Key="StreetTypesGridTemplate">
+        <ev:StreetTypeView />
+    </DataTemplate>
+    <DataTemplate x:Key="MetersGridTemplate">
+        <ev:MeterView />
+    </DataTemplate>
+    <DataTemplate x:Key="MeterTypesGridTemplate">
+        <ev:MeterTypeView />
+    </DataTemplate>
+    <DataTemplate x:Key="ServiceTypesGridTemplate">
+        <ev:ServiceTypeView />
+    </DataTemplate>
+    <DataTemplate x:Key="ReadingsGridTemplate">
+        <ev:ReadingView />
+    </DataTemplate>
+    <DataTemplate x:Key="PayersGridTemplate">
+        <ev:PayerView />
+    </DataTemplate>
+    <DataTemplate x:Key="UnitsGridTemplate">
+        <ev:UnitView />
+    </DataTemplate>
+    <DataTemplate x:Key="BenefitsGridTemplate">
+        <ev:BenefitView />
+    </DataTemplate>
+    <DataTemplate x:Key="RegistrationsGridTemplate">
+        <ev:RegistrationView />
+    </DataTemplate>
+    <DataTemplate x:Key="UsersGridTemplate">
+        <ev:UserView />
+    </DataTemplate>
+    <DataTemplate x:Key="ServicesGridTemplate">
+        <ev:ServiceView />
+    </DataTemplate>
+    <DataTemplate x:Key="RatesGridTemplate">
+        <ev:RateView />
+    </DataTemplate>
+    <DataTemplate x:Key="PaymentsGridTemplate">
+        <ev:PaymentView />
+    </DataTemplate>
+
+    <!-- EndRegion -->
+
+    <!-- Region Grid buttons-->
+    <DataGridTemplateColumn x:Key="goToButtons" x:Shared="False">
+        <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+                <Button Command="{Binding DataContext.GoToEntity, ElementName=root}"
+                        CommandParameter="{Binding}"
+                        Style="{StaticResource ButtonVisibility}">
+                    <Image Source="../Images/eye16.png" />
+                </Button>
+            </DataTemplate>
+        </DataGridTemplateColumn.CellTemplate>
+    </DataGridTemplateColumn>
+
+    <DataGridTemplateColumn x:Key="editButtons" x:Shared="False">
+        <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+                <Button Command="{Binding DataContext.EditItem, ElementName=root}"
+                        CommandParameter="{Binding}"
+                        Style="{StaticResource ButtonVisibility}">
+                    <Image Source="../Images/pencil16.png" />
+                </Button>
+            </DataTemplate>
+        </DataGridTemplateColumn.CellTemplate>
+    </DataGridTemplateColumn>
+
+    <DataGridTemplateColumn x:Key="deleteButtons" x:Shared="False">
+        <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+                <Button Command="{Binding DataContext.DeleteItem, ElementName=root}"
+                        CommandParameter="{Binding}"
+                        Style="{StaticResource ButtonVisibility}">
+                    <Image Source="../Images/delete16.png" />
+                </Button>
+            </DataTemplate>
+        </DataGridTemplateColumn.CellTemplate>
+    </DataGridTemplateColumn>
+
+    <!-- EndRegion -->
+</ResourceDictionary>

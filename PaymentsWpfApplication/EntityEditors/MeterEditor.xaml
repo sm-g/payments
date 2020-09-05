@@ -1,0 +1,58 @@
+﻿<UserControl xmlns:Controls="clr-namespace:PaymentsWpfApplication.Controls"
+             x:Class="PaymentsWpfApplication.EntityViews.MeterEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:data="clr-namespace:Payments.Data;assembly=Payments.Data"
+             xmlns:prop="clr-namespace:PaymentsWpfApplication.Properties"
+             xmlns:m="clr-namespace:Payments.Model;assembly=Payments.Model"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             d:DataContext="{DynamicResource entity}">
+    <UserControl.Resources>
+        <data:Meter x:Key="entity" />
+    </UserControl.Resources>
+
+    <Grid>
+        <StackPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorID}"
+                           Style="{StaticResource editorLabel}" />
+                <TextBox Text="{Binding MeterID}"
+                         Style="{StaticResource nonEditableTextBox}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorRegistration}"
+                           Style="{StaticResource editorLabel}" />
+                <Controls:TextBoxWithButton Command="{Binding DataContext.BeginPickup, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
+                                            CommandParameter="{x:Static m:Entity.Registration}"
+                                            Style="{StaticResource editorTextBox}">
+                    <Controls:TextBoxWithButton.Text>
+                        <MultiBinding StringFormat="{}{0}, {1} {2} {3}, {4} — {5} {6} {7}">
+                            <Binding Path="Registration.Flat.House.Street.Settlement.Name" />
+                            <Binding Path="Registration.Flat.House.Street.Name" />
+                            <Binding Path="Registration.Flat.House.Number" />
+                            <Binding Path="Registration.Flat.House.Building" />
+                            <Binding Path="Registration.Flat.Number" />
+                            <Binding Path="Registration.Payer.LastName" />
+                            <Binding Path="Registration.Payer.FirstName" />
+                            <Binding Path="Registration.Payer.MiddleName"
+                                     FallbackValue="" />
+                        </MultiBinding>
+                    </Controls:TextBoxWithButton.Text>
+                </Controls:TextBoxWithButton>
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorType}"
+                           Style="{StaticResource editorLabel}" />
+                <Controls:TextBoxWithButton Text="{Binding MeterType.Name}"
+                                            Command="{Binding DataContext.BeginPickup, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
+                                            CommandParameter="{x:Static m:Entity.MeterType}"
+                                            Style="{StaticResource editorTextBox}">
+                </Controls:TextBoxWithButton>
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,156 @@
+﻿<UserControl x:Class="PaymentsWpfApplication.Controls.Breadcrumbs"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:templates="clr-namespace:PaymentsWpfApplication.Templates"
+             xmlns:prop="clr-namespace:PaymentsWpfApplication.Properties"
+             xmlns:ev="clr-namespace:PaymentsWpfApplication.EntityViews"
+             mc:Ignorable="d"
+             d:DesignHeight="30"
+             d:DesignWidth="300"
+             x:Name="root"
+             d:DataContext="{StaticResource DataViewerVM}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Templates/EntityTemplateDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="TextBlock"
+                   x:Key="breadcrumbsSeparator">
+                <Setter Property="Text"
+                        Value=" > " />
+                <Setter Property="Visibility"
+                        Value="Collapsed" />
+            </Style>
+
+            <DataTemplate x:Key="SettlementBc">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>
+                        <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}"
+                                   CommandParameter="{Binding}">
+                    	    <TextBlock Text="{Binding Name}" />
+                        </Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="StreetBc">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="separtor"
+                               Style="{DynamicResource breadcrumbsSeparator}" />
+                    <TextBlock>
+                        <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}"
+                                   CommandParameter="{Binding}">
+                            <TextBlock Text="{Binding StreetType.Suffix, Converter={StaticResource trimConverter}, FallbackValue=''}" />
+                            <TextBlock Text="{Binding Name}" />
+                        </Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+                <DataTemplate.Triggers>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding RelativeSource={RelativeSource PreviousData}, Converter={StaticResource isNullConverter}}"
+                                       Value="False" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Visibility"
+                                TargetName="separtor"
+                                Value="Visible" />
+                    </MultiDataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+            <DataTemplate x:Key="HouseBc">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="separtor"
+                               Style="{DynamicResource breadcrumbsSeparator}" />
+                    <TextBlock>
+                        <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}"
+                                   CommandParameter="{Binding}">
+                            <TextBlock Text="{x:Static prop:Resources.ShortHouse}" />
+                            <TextBlock Text="{Binding Number}" />
+                            <TextBlock Text="{x:Static prop:Resources.ShortBuilding}"
+                                       Visibility="{Binding Building, Converter={StaticResource isNullToVisConverter}}" />
+                            <TextBlock Text="{Binding Building}" />
+                        </Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+                <DataTemplate.Triggers>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding RelativeSource={RelativeSource PreviousData}, Converter={StaticResource isNullConverter}}"
+                                       Value="False" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Visibility"
+                                TargetName="separtor"
+                                Value="Visible" />
+                    </MultiDataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+            <DataTemplate x:Key="FlatBc">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="separtor"
+                               Style="{DynamicResource breadcrumbsSeparator}" />
+                    <TextBlock>
+                        <Hyperlink Command="{Binding DataContext.GoToEntity, ElementName=root, Mode=OneWay}"
+                                   CommandParameter="{Binding}">
+                    	    <TextBlock Text="{x:Static prop:Resources.ShortFlat}" />
+                            <TextBlock Text="{Binding Number}" />
+                        </Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+                <DataTemplate.Triggers>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding RelativeSource={RelativeSource PreviousData}, Converter={StaticResource isNullConverter}}"
+                                       Value="False" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Visibility"
+                                TargetName="separtor"
+                                Value="Visible" />
+                    </MultiDataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+            <templates:EntityTemplateSelector x:Key="bcEntityTemplateSelector"
+                                              SettlementTemplate="{StaticResource SettlementBc}"
+                                              StreetTemplate="{StaticResource StreetBc}"
+                                              HouseTemplate="{StaticResource HouseBc}"
+                                              FlatTemplate="{StaticResource FlatBc}"
+                                              FlatTypeTemplate="{StaticResource FlatTypeTemplate}"
+                                              StreetTypeTemplate="{StaticResource StreetTypeTemplate}"
+                                              MeterTemplate="{StaticResource MeterTemplate}"
+                                              MeterTypeTemplate="{StaticResource MeterTypeTemplate}"
+                                              BenefitTemplate="{StaticResource BenefitTemplate}"
+                                              PayerTemplate="{StaticResource PayerTemplate}"
+                                              UnitTemplate="{StaticResource UnitTemplate}"
+                                              ReadingTemplate="{StaticResource ReadingTemplate}"
+                                              RegistrationTemplate="{StaticResource RegistrationTemplate}"
+                                              ServiceTypeTemplate="{StaticResource ServiceTypeTemplate}"
+                                              ServiceTemplate="{StaticResource ServiceTemplate}"
+                                              UserTemplate="{StaticResource UserTemplate}"
+                                              RateTemplate="{StaticResource RateTemplate}"
+                                              PaymentTemplate="{StaticResource PaymentTemplate}"
+                                              NullEntityTemplate="{StaticResource NullEntityTemplate}" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <ItemsControl x:Name="breadcrumbs"
+                      ItemsSource="{Binding Breadcrumbs}"
+                      ItemTemplateSelector="{StaticResource bcEntityTemplateSelector}">
+            <ItemsControl.Resources>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Margin"
+                            Value="0,0,10,0" />
+                </Style>
+            </ItemsControl.Resources>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </Grid>
+</UserControl>

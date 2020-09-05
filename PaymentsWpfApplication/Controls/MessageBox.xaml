@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="PaymentsWpfApplication.Controls.MessageBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:prop="clr-namespace:PaymentsWpfApplication.Properties"
+             mc:Ignorable="d"
+             Height="200"
+             Width="400"
+             d:DataContext="{StaticResource MainWindowVM}">
+    <Border BorderThickness="1">
+        <Border.BorderBrush>
+            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
+        </Border.BorderBrush>
+        <Border.Background>
+            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}" />
+        </Border.Background>
+        <Border BorderThickness="5">
+            <Border.Background>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}" />
+            </Border.Background>
+            <Border.BorderBrush>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.InfoColorKey}}" />
+            </Border.BorderBrush>
+            <DockPanel>
+                <Button DockPanel.Dock="Right"
+                        VerticalAlignment="Top"
+                        Width="{Binding ActualHeight, ElementName=Title}"
+                        Height="{Binding Width, RelativeSource={RelativeSource Self}}"
+                        Margin="0,10,10,0"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Padding="1,-2,1,1"
+                        Command="{Binding CloseMessage, Mode=OneWay}">
+                    ×
+                </Button>
+                <StackPanel Height="30"
+                            x:Name="Title"
+                            DockPanel.Dock="Top"
+                            Orientation="Horizontal"
+                            Margin="10,10,0,0">
+                    <Image Source="../Images/error.png"
+                           Margin="0,0,10,0" />
+                    <TextBlock Text="{x:Static prop:Resources.ErrorTitle}"
+                               FontSize="18" />
+                </StackPanel>
+
+                <TextBox IsReadOnlyCaretVisible="True"
+                         IsReadOnly="True"
+                         Text="{Binding Error}"
+                         TextWrapping="Wrap"
+                         DockPanel.Dock="Bottom"
+                         Margin="10" />
+            </DockPanel>
+        </Border>
+    </Border>
+</UserControl>

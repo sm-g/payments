@@ -1,0 +1,173 @@
+﻿<Application x:Class="PaymentsWpfApplication.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:vm="clr-namespace:PaymentsWpfApplication.ViewModels"
+             xmlns:conv="clr-namespace:PaymentsWpfApplication.Converters"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <vm:MainWindowViewModel x:Key="MainWindowVM" />
+        <vm:DataViewerViewModel x:Key="DataViewerVM" />
+        <vm:PayNReadReportBuilderViewModel x:Key="PayNReadReportBuilderVM" />
+        <vm:AvgPayReportBuilderViewModel x:Key="AvgPayReportBuilderVM" />
+        <vm:DataPresenterViewModel x:Key="DataPresenterVM" />
+
+        <!-- Region Converters -->
+
+        <conv:StringTrimmingConverter x:Key="trimConverter" />
+
+        <conv:BooleanToVisibilityConverter
+            x:Key="BooleanToVisibilityConverter"
+            False="Collapsed"
+            True="Visible" />
+
+        <conv:BooleanToVisibilityConverter
+            x:Key="NegateBooleanToVisibilityConverter"
+            False="Visible"
+            True="Hidden" />
+
+        <conv:NegateConverter x:Key="negateConverter" />
+
+        <conv:IsNullToVisConverter x:Key="isNullToVisConverter" />
+
+        <conv:IsNullConverter x:Key="isNullConverter" />
+
+        <!-- EndRegion -->
+
+        <Style TargetType="ToggleButton">
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Region Editor styles -->
+
+        <Style TargetType="DockPanel" x:Key="editorRow">
+            <Setter Property="Margin" Value="{DynamicResource MarginBottom}" />
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="editorLabel">
+            <Setter Property="Width" Value="100" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Padding" Value="{DynamicResource MarginRight}" />
+        </Style>
+
+        <Style TargetType="Control" x:Key="editorTextBox">
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+
+        <Style TargetType="DatePicker" x:Key="editorDatePicker" BasedOn="{StaticResource editorTextBox}">
+            <Setter Property="SelectedDateFormat" Value="Short" />
+            <Setter Property="FirstDayOfWeek" Value="Monday" />
+            <Setter Property="DisplayDateStart" Value="1900-01-01" />
+        </Style>
+
+        <!--Only month datepicker -->
+        <Style TargetType="{x:Type DatePickerTextBox}" x:Key="monthYearPicker">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <TextBox x:Name="PART_TextBox"
+                             Text="{Binding Path=SelectedDate, StringFormat='MMMM yyyy',
+                             RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" BorderThickness="0" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="RadioButton" x:Key="editorRadio">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border
+                            Name="Border"
+                            Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+                            BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                            BorderThickness="1">
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                Margin="{TemplateBinding Padding}"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Content}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="nonEditableTextBox" BasedOn="{StaticResource editorTextBox}">
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0,0" StartPoint="8,8" SpreadMethod="Repeat" MappingMode="Absolute">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5" />
+                                <SkewTransform CenterY="0.5" CenterX="0.5" />
+                                <RotateTransform CenterY="0.5" CenterX="0.5" />
+                                <TranslateTransform />
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FFEEEEEE" Offset="0" />
+                        <GradientStop Color="#FFEEEEEE" Offset="0.3" />
+                        <GradientStop Color="White" Offset="0.3" />
+                        <GradientStop Color="White" Offset="1" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- EndRegion -->
+
+        <!-- Region Entity grid styles -->
+
+        <Style TargetType="DataGrid" x:Key="entityGrid">
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="CanUserAddRows" Value="False" />
+            <Setter Property="CanUserDeleteRows" Value="False" />
+            <Setter Property="CanUserReorderColumns" Value="False" />
+            <Setter Property="FrozenColumnCount" Value="1" />
+
+            <Setter Property="GridLinesVisibility" Value="Vertical" />
+            <Setter Property="VerticalGridLinesBrush" Value="#FFB2B2B2" />
+            <Setter Property="AlternationCount" Value="2" />
+            <Setter Property="AlternatingRowBackground" Value="AliceBlue" />
+        </Style>
+
+        <Style TargetType="DataGridRow" x:Key="entityGridRow">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Azure" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="ButtonVisibility">
+            <Setter Property="Button.Visibility" Value="Hidden" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=IsSelected}" Value="True">
+                    <Setter Property="Button.Visibility" Value="Visible" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=IsMouseOver}" Value="True">
+                    <Setter Property="Button.Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- EndRegion -->
+
+        <Thickness x:Key="MarginBottom">0,0,0,10</Thickness>
+        <Thickness x:Key="MarginRight">0,0,10,0</Thickness>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,553 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{72E5D2A5-2ECF-4F8E-B041-9C2B5735D0A7}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PaymentsWpfApplication</RootNamespace>
+    <AssemblyName>PaymentsWpfApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="EventAggregator">
+      <HintPath>.\EventAggregator.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="ReachFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Compile Include="Controls\Breadcrumbs.xaml.cs">
+      <DependentUpon>Breadcrumbs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EntitiesViewer.xaml.cs">
+      <DependentUpon>EntitiesViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EntityEditor.xaml.cs">
+      <DependentUpon>EntityEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MessageBox.xaml.cs">
+      <DependentUpon>MessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SexChooser.xaml.cs">
+      <DependentUpon>SexChooser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TextBoxWithButton.xaml.cs">
+      <DependentUpon>TextBoxWithButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\NegateConverter.cs" />
+    <Compile Include="Converters\LogicalNORConverter.cs" />
+    <Compile Include="Converters\SexToStringConverter.cs" />
+    <Compile Include="Converters\IsNullToVisConverter.cs" />
+    <Compile Include="Converters\SexToBoolConverter.cs" />
+    <Compile Include="Converters\TrimConverter.cs" />
+    <Compile Include="EntityEditors\BenefitEditor.xaml.cs">
+      <DependentUpon>BenefitEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\PaymentEditor.xaml.cs">
+      <DependentUpon>PaymentEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\RateEditor.xaml.cs">
+      <DependentUpon>RateEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\ServiceEditor.xaml.cs">
+      <DependentUpon>ServiceEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\RegistrationEditor.xaml.cs">
+      <DependentUpon>RegistrationEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\UnitEditor.xaml.cs">
+      <DependentUpon>UnitEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\ReadingEditor.xaml.cs">
+      <DependentUpon>ReadingEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\PayerEditor.xaml.cs">
+      <DependentUpon>PayerEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\StreetTypeEditor.xaml.cs">
+      <DependentUpon>StreetTypeEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\MeterEditor.xaml.cs">
+      <DependentUpon>MeterEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\ServiceTypeEditor.xaml.cs">
+      <DependentUpon>ServiceTypeEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\MeterTypeEditor.xaml.cs">
+      <DependentUpon>MeterTypeEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\FlatTypeEditor.xaml.cs">
+      <DependentUpon>FlatTypeEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\UserEditor.xaml.cs">
+      <DependentUpon>UserEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\FlatEditor.xaml.cs">
+      <DependentUpon>FlatEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\HouseEditor.xaml.cs">
+      <DependentUpon>HouseEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\SettlementEditor.xaml.cs">
+      <DependentUpon>SettlementEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityEditors\StreetEditor.xaml.cs">
+      <DependentUpon>StreetEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\BenefitView.xaml.cs">
+      <DependentUpon>BenefitView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\PaymentView.xaml.cs">
+      <DependentUpon>PaymentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\RateView.xaml.cs">
+      <DependentUpon>RateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\ServiceView.xaml.cs">
+      <DependentUpon>ServiceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\UserView.xaml.cs">
+      <DependentUpon>UserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\RegistrationView.xaml.cs">
+      <DependentUpon>RegistrationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\ServiceTypeView.xaml.cs">
+      <DependentUpon>ServiceTypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\UnitView.xaml.cs">
+      <DependentUpon>UnitView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\ReadingView.xaml.cs">
+      <DependentUpon>ReadingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\PayerView.xaml.cs">
+      <DependentUpon>PayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\MeterView.xaml.cs">
+      <DependentUpon>MeterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\MeterTypeView.xaml.cs">
+      <DependentUpon>MeterTypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\StreetTypeView.xaml.cs">
+      <DependentUpon>StreetTypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\FlatTypeView.xaml.cs">
+      <DependentUpon>FlatTypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\FlatView.xaml.cs">
+      <DependentUpon>FlatView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\HouseView.xaml.cs">
+      <DependentUpon>HouseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\StreetView.xaml.cs">
+      <DependentUpon>StreetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViews\SettlementView.xaml.cs">
+      <DependentUpon>SettlementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\BooleanToVisConverter.cs" />
+    <Compile Include="Reports\CustomDataGridDocumentPaginator.cs" />
+    <Compile Include="Reports\Printer.cs" />
+    <Compile Include="Screens\AvgPayReportBuilderScreen.xaml.cs">
+      <DependentUpon>AvgPayReportBuilderScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\DataViewerScreen.xaml.cs">
+      <DependentUpon>DataViewerScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\IsNullConverter.cs" />
+    <Compile Include="Screens\PayNReadReportBuilderScreen.xaml.cs">
+      <DependentUpon>PayNReadReportBuilderScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ChildFinders.cs" />
+    <Compile Include="ViewModels\Reports\AbstractReportBuilderViewModel.cs" />
+    <Compile Include="ViewModels\Reports\AvgPayReportBuilderViewModel.cs" />
+    <Compile Include="ViewModels\Reports\PaymentsOfServiceReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\ReadingsInRegistrationReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\PaymentsInRegistrationReportViewModel.cs" />
+    <Compile Include="ViewModels\DataNavigatorViewModel.cs" />
+    <Compile Include="ViewModels\DataPresenterViewModel.cs" />
+    <Compile Include="ViewModels\DataViewerViewModel.cs" />
+    <Compile Include="Templates\EntityTemplateSelector.cs" />
+    <Compile Include="ViewModels\Framework\ViewModelBase.cs" />
+    <Compile Include="ViewModels\Framework\RelayCommand.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\PageParams.cs" />
+    <Compile Include="ViewModels\PickUperViewModel.cs" />
+    <Compile Include="ViewModels\Reports\PayNReadReportBuilderViewModel.cs" />
+    <Page Include="Controls\Breadcrumbs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DataNavigator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\EntitiesViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\EntityEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MainMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SexChooser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TextBoxWithButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EntityEditors\BenefitEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityEditors\PaymentEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityEditors\RateEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityEditors\ServiceEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityEditors\RegistrationEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityEditors\UnitEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityEditors\ReadingEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityEditors\PayerEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityEditors\StreetTypeEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityEditors\MeterEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityEditors\ServiceTypeEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityEditors\MeterTypeEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityEditors\FlatTypeEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityEditors\UserEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityEditors\FlatEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EntityEditors\HouseEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EntityEditors\SettlementEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EntityEditors\StreetEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EntityViews\BenefitView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\PaymentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\RateView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\ServiceView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\UserView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\RegistrationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\ServiceTypeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\UnitView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\ReadingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\PayerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\MeterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\MeterTypeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\StreetTypeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\FlatTypeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\FlatView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\HouseView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\StreetView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityViews\SettlementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\AvgPayReportBuilderScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\DataViewerScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\LoginScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\DataNavigator.xaml.cs">
+      <DependentUpon>DataNavigator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\LoginScreen.xaml.cs">
+      <DependentUpon>LoginScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Screens\PayNReadReportBuilderScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\EntityTemplateDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Payments.Data\Payments.Data.csproj">
+      <Project>{a7c07c18-9768-4054-96eb-f03da35f92c9}</Project>
+      <Name>Payments.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Payments.Model\Payments.Model.csproj">
+      <Project>{34c165e0-9d85-4f36-8a2c-4af729502583}</Project>
+      <Name>Payments.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\add32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\pencil32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\save32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\eye32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\delete32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\databaserefresh32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\information.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\exclamation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\delete16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\pencil16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\eye16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\save16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\printer32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\previous.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\first.png" />
+    <Resource Include="Images\last.png" />
+    <Resource Include="Images\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\saveall32.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

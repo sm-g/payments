@@ -1,0 +1,78 @@
+﻿<UserControl xmlns:Controls="clr-namespace:PaymentsWpfApplication.Controls"
+             x:Class="PaymentsWpfApplication.EntityViews.FlatEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:data="clr-namespace:Payments.Data;assembly=Payments.Data"
+             xmlns:prop="clr-namespace:PaymentsWpfApplication.Properties"
+             xmlns:m="clr-namespace:Payments.Model;assembly=Payments.Model"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             d:DataContext="{DynamicResource entity}">
+    <UserControl.Resources>
+        <data:Flat x:Key="entity" />
+    </UserControl.Resources>
+
+    <Grid>
+        <StackPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorID}"
+                           Style="{StaticResource editorLabel}" />
+                <TextBox Text="{Binding HouseID}"
+                         Style="{StaticResource nonEditableTextBox}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorAddress}"
+                           Style="{StaticResource editorLabel}" />
+                <Controls:TextBoxWithButton Command="{Binding DataContext.BeginPickup, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
+                                            CommandParameter="{x:Static m:Entity.House}"
+                                            Style="{StaticResource editorTextBox}">
+                    <Controls:TextBoxWithButton.Text>
+                        <MultiBinding StringFormat="{}{0}, {1} {2}, {3}">
+                            <Binding Path="House.Street.Settlement.Name" />
+                            <Binding Path="House.Street.StreetType.Suffix"
+                                     Converter="{StaticResource trimConverter}"
+                                     FallbackValue="" />
+                            <Binding Path="House.Street.Name" />
+                            <Binding Path="House.Number" />
+                        </MultiBinding>
+                    </Controls:TextBoxWithButton.Text>
+                </Controls:TextBoxWithButton>
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorNumber}"
+                           Style="{StaticResource editorLabel}" />
+                <TextBox Text="{Binding Number}"
+                         Style="{StaticResource editorTextBox}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorLivMen}"
+                           Style="{StaticResource editorLabel}" />
+                <TextBox Text="{Binding LivingMen}"
+                         Style="{StaticResource editorTextBox}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorLivArea}"
+                           Style="{StaticResource editorLabel}" />
+                <TextBox Text="{Binding LivingArea}"
+                         Style="{StaticResource editorTextBox}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorTotalArea}"
+                           Style="{StaticResource editorLabel}" />
+                <TextBox Text="{Binding CommonArea}"
+                         Style="{StaticResource editorTextBox}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorType}"
+                           Style="{StaticResource editorLabel}" />
+                <Controls:TextBoxWithButton Text="{Binding FlatType.Name}"
+                                            Command="{Binding DataContext.BeginPickup, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
+                                            CommandParameter="{x:Static m:Entity.FlatType}"
+                                            Style="{StaticResource editorTextBox}" />
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

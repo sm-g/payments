@@ -1,0 +1,78 @@
+﻿<UserControl xmlns:Controls="clr-namespace:PaymentsWpfApplication.Controls"
+             x:Class="PaymentsWpfApplication.EntityViews.RegistrationEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:data="clr-namespace:Payments.Data;assembly=Payments.Data"
+             xmlns:prop="clr-namespace:PaymentsWpfApplication.Properties"
+             xmlns:m="clr-namespace:Payments.Model;assembly=Payments.Model"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             d:DataContext="{DynamicResource entity}">
+    <UserControl.Resources>
+        <data:Registration x:Key="entity" />
+    </UserControl.Resources>
+
+    <Grid>
+        <StackPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorID}"
+                           Style="{StaticResource editorLabel}" />
+                <TextBox Text="{Binding RegistrationID}"
+                         Style="{StaticResource nonEditableTextBox}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorPaymentStart}"
+                           Style="{StaticResource editorLabel}" />
+                <DatePicker SelectedDate="{Binding PaymentStartDate}"
+                            DisplayDateStart="2010-01-01"
+                            Style="{StaticResource editorDatePicker}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorFlat}"
+                           Style="{StaticResource editorLabel}" />
+                <Controls:TextBoxWithButton Command="{Binding DataContext.BeginPickup, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
+                                            CommandParameter="{x:Static m:Entity.Flat}"
+                                            Style="{StaticResource editorTextBox}">
+                    <Controls:TextBoxWithButton.Text>
+                        <MultiBinding StringFormat="{}{0}, {1} {2}, {3}{4}, {5}">
+                            <Binding Path="Flat.House.Street.Settlement.Name" />
+                            <Binding Path="Flat.House.Street.StreetType.Suffix"
+                                     Converter="{StaticResource trimConverter}"
+                                     FallbackValue="" />
+                            <Binding Path="Flat.House.Street.Name" />
+                            <Binding Path="Flat.House.Number" />
+                            <Binding Path="Flat.House.Building" />
+                            <Binding Path="Flat.Number" />
+                        </MultiBinding>
+                    </Controls:TextBoxWithButton.Text>
+                </Controls:TextBoxWithButton>
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorPayer}"
+                           Style="{StaticResource editorLabel}" />
+                <Controls:TextBoxWithButton Command="{Binding DataContext.BeginPickup, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
+                                            CommandParameter="{x:Static m:Entity.Payer}"
+                                            Style="{StaticResource editorTextBox}">
+                    <Controls:TextBoxWithButton.Text>
+                        <MultiBinding StringFormat="{}{0} {1} {2}">
+                            <Binding Path="Payer.LastName" />
+                            <Binding Path="Payer.FirstName" />
+                            <Binding Path="Payer.MiddleName"
+                                     FallbackValue="" />
+                        </MultiBinding>
+                    </Controls:TextBoxWithButton.Text>
+                </Controls:TextBoxWithButton>
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorPaymentFinish}"
+                           Style="{StaticResource editorLabel}" />
+                <DatePicker SelectedDate="{Binding PaymentFinishDate}"
+                            DisplayDateStart="2010-01-01"
+                            Style="{StaticResource editorDatePicker}" />
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

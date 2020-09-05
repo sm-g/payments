@@ -1,0 +1,4 @@
+login	pass	hash
+asd	123		NlczvrsTqB/8a+oQKHm7XKtQWRiu9iJpqT62CUIeahQ=
+vcxz	111	tbGc01nQ/NmmV2zkfdvy44+P/vkU9VByeVaCRZZQIuY=
+admin	123456	r5gTf59SveTcxvkSnQeysRSLsXrMtIU9YEEbP2Q5GaQ=

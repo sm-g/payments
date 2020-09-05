@@ -1,0 +1,73 @@
+﻿<UserControl xmlns:Controls="clr-namespace:PaymentsWpfApplication.Controls"
+             x:Class="PaymentsWpfApplication.EntityViews.PayerEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:data="clr-namespace:Payments.Data;assembly=Payments.Data"
+             xmlns:prop="clr-namespace:PaymentsWpfApplication.Properties"
+             xmlns:m="clr-namespace:Payments.Model;assembly=Payments.Model"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             d:DataContext="{DynamicResource entity}">
+    <UserControl.Resources>
+        <data:Flat x:Key="entity" />
+    </UserControl.Resources>
+
+    <Grid>
+        <StackPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorID}"
+                           Style="{StaticResource editorLabel}" />
+                <TextBox Text="{Binding PayerID}"
+                         Style="{StaticResource nonEditableTextBox}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorLastName}"
+                           Style="{StaticResource editorLabel}" />
+                <TextBox Text="{Binding LastName}"
+                         Style="{StaticResource editorTextBox}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorFirstName}"
+                           Style="{StaticResource editorLabel}" />
+                <TextBox Text="{Binding FirstName}"
+                         Style="{StaticResource editorTextBox}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorMiddleName}"
+                           Style="{StaticResource editorLabel}" />
+                <TextBox Text="{Binding MiddleName}"
+                         Style="{StaticResource editorTextBox}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorBirthDate}"
+                           Style="{StaticResource editorLabel}" />
+                <DatePicker SelectedDate="{Binding BirthDate}"
+                            Style="{StaticResource editorDatePicker}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorSex}"
+                           Style="{StaticResource editorLabel}" />
+                <Controls:SexChooser Sex="{Binding Sex}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorBenefit}"
+                           Style="{StaticResource editorLabel}" />
+                <Controls:TextBoxWithButton Text="{Binding Benefit.Name}"
+                                            Command="{Binding DataContext.BeginPickup, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
+                                            CommandParameter="{x:Static m:Entity.Benefit}"
+                                            Style="{StaticResource editorTextBox}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorUser}"
+                           Style="{StaticResource editorLabel}" />
+                <Controls:TextBoxWithButton Text="{Binding User.Login}"
+                                            Command="{Binding DataContext.BeginPickup, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=2}}"
+                                            CommandParameter="{x:Static m:Entity.User}"
+                                            Style="{StaticResource editorTextBox}" />
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

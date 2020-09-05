@@ -1,0 +1,98 @@
+﻿<UserControl x:Class="PaymentsWpfApplication.EntityViews.RegistrationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:prop="clr-namespace:PaymentsWpfApplication.Properties"
+             xmlns:vm="clr-namespace:PaymentsWpfApplication.ViewModels"
+             xmlns:ev="clr-namespace:PaymentsWpfApplication.EntityViews"
+             xmlns:s="clr-namespace:PaymentsWpfApplication.Screens"
+             xmlns:data="clr-namespace:Payments.Data;assembly=Payments.Data"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="600"
+             x:Name="root"
+             d:DataContext="{StaticResource DataViewerVM}"
+             Loaded="root_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Templates/EntityTemplateDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <DataGrid ItemsSource="{Binding Items}"
+                  Style="{StaticResource entityGrid}"
+                  SelectedIndex="{Binding CurrentIndex}"
+                  RowStyle="{StaticResource entityGridRow}"
+                  x:Name="grid">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding RegistrationID}"
+                                    Header="{x:Static prop:Resources.EditorID}"
+                                    IsReadOnly="True" />
+
+                <DataGridTextColumn Binding="{Binding Flat.House.Street.Settlement.Name}"
+                                    Header="{x:Static prop:Resources.EditorSettlement}"
+                                    IsReadOnly="True"
+                                    x:Name="settlementColumn" />
+                <DataGridTextColumn Header="{x:Static prop:Resources.EditorStreet}"
+                                    IsReadOnly="True"
+                                    SortMemberPath="Flat.House.Street.Name"
+                                    x:Name="streetColumn">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="Flat.House.Street.StreetType.Suffix"
+                                     Converter="{StaticResource trimConverter}"
+                                     FallbackValue="" />
+                            <Binding Path="Flat.House.Street.Name" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="{x:Static prop:Resources.EditorHouse}"
+                                    IsReadOnly="True"
+                                    SortMemberPath="Flat.House.Number"
+                                    x:Name="houseColumn">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0}{1}">
+                            <Binding Path="Flat.House.Number" />
+                            <Binding Path="Flat.House.Building" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding Flat.Number}"
+                                    Header="{x:Static prop:Resources.EditorFlat}"
+                                    x:Name="flatColumn" />
+
+                <DataGridTextColumn Binding="{Binding Payer.LastName}"
+                                    Header="{x:Static prop:Resources.EditorLastName}"
+                                    x:Name="lastNameColumn" />
+                <DataGridTextColumn Binding="{Binding Payer.FirstName}"
+                                    Header="{x:Static prop:Resources.EditorFirstName}"
+                                    x:Name="firstNameColumn" />
+                <DataGridTextColumn Binding="{Binding Payer.MiddleName}"
+                                    Header="{x:Static prop:Resources.EditorMiddleName}"
+                                    x:Name="middleNameColumn" />
+
+                <DataGridTextColumn Binding="{Binding PaymentStartDate, StringFormat='{}{0:d}'}"
+                                    Header="{x:Static prop:Resources.EditorPaymentStart}" />
+                <DataGridTextColumn Binding="{Binding  PaymentFinishDate, FallbackValue=''}"
+                                    Header="{x:Static prop:Resources.EditorPaymentFinish}"
+                                    Width="*" />
+
+                <StaticResource ResourceKey="goToButtons" />
+                <StaticResource ResourceKey="editButtons" />
+                <StaticResource ResourceKey="deleteButtons" />
+            </DataGrid.Columns>
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectEntity}"
+                                           CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DataGrid>
+    </Grid>
+</UserControl>

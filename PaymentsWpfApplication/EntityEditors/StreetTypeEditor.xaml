@@ -1,0 +1,40 @@
+﻿<UserControl xmlns:Controls="clr-namespace:PaymentsWpfApplication.Controls"
+             x:Class="PaymentsWpfApplication.EntityViews.StreetTypeEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:data="clr-namespace:Payments.Data;assembly=Payments.Data"
+             xmlns:prop="clr-namespace:PaymentsWpfApplication.Properties"
+             xmlns:m="clr-namespace:Payments.Model;assembly=Payments.Model"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             d:DataContext="{DynamicResource entity}">
+    <UserControl.Resources>
+        <data:StreetType x:Key="entity" />
+    </UserControl.Resources>
+
+    <Grid>
+        <StackPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorID}"
+                           Style="{StaticResource editorLabel}" />
+                <TextBox Text="{Binding StreetTypeID}"
+                         Style="{StaticResource nonEditableTextBox}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorName}"
+                           Style="{StaticResource editorLabel}" />
+                <TextBox Text="{Binding Fullname}"
+                         Style="{StaticResource editorTextBox}" />
+            </DockPanel>
+            <DockPanel Style="{StaticResource editorRow}">
+                <TextBlock Text="{x:Static prop:Resources.EditorSuffix}"
+                           Style="{StaticResource editorLabel}" />
+                <TextBox Text="{Binding Suffix}"
+                         Style="{StaticResource editorTextBox}" />
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

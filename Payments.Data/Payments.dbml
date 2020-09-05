@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PaymentsDatabase" Class="PaymentsDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(localdb)\Projects;Initial Catalog=PaymentsDatabase;Integrated Security=True;Connect Timeout=30" SettingsObjectName="Payments.Data.Properties.Settings" SettingsPropertyName="PaymentsDatabaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Benefit" Member="Benefits">
+    <Type Name="Benefit">
+      <Column Name="BenefitID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="Benefit_Rate" Member="Rates" ThisKey="BenefitID" OtherKey="BenefitID" Type="Rate" />
+      <Association Name="Benefit_Payer" Member="Payers" ThisKey="BenefitID" OtherKey="BenefitID" Type="Payer" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FlatType" Member="FlatTypes">
+    <Type Name="FlatType">
+      <Column Name="FlatTypeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="FlatType_Flat" Member="Flats" ThisKey="FlatTypeID" OtherKey="FlatTypeID" Type="Flat" />
+      <Association Name="FlatType_Rate" Member="Rates" ThisKey="FlatTypeID" OtherKey="FlatTypeID" Type="Rate" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Flat" Member="Flats">
+    <Type Name="Flat">
+      <Column Name="FlatID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Number" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="LivingMen" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="CommonArea" Type="System.Decimal" DbType="Decimal(7,3)" CanBeNull="true" />
+      <Column Name="LivingArea" Type="System.Decimal" DbType="Decimal(7,3)" CanBeNull="true" />
+      <Column Name="FlatTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="HouseID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Flat_Registration" Member="Registrations" ThisKey="FlatID" OtherKey="FlatID" Type="Registration" />
+      <Association Name="FlatType_Flat" Member="FlatType" ThisKey="FlatTypeID" OtherKey="FlatTypeID" Type="FlatType" IsForeignKey="true" />
+      <Association Name="House_Flat" Member="House" ThisKey="HouseID" OtherKey="HouseID" Type="House" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.House" Member="Houses">
+    <Type Name="House">
+      <Column Name="HouseID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Number" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Building" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="StreetID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="House_Flat" Member="Flats" ThisKey="HouseID" OtherKey="HouseID" Type="Flat" />
+      <Association Name="Street_House" Member="Street" ThisKey="StreetID" OtherKey="StreetID" Type="Street" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Settlement" Member="Settlements">
+    <Type Name="Settlement">
+      <Column Name="SettlementID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(40) NOT NULL" CanBeNull="false" />
+      <Association Name="Settlement_Street" Member="Streets" ThisKey="SettlementID" OtherKey="SettlementID" Type="Street" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Reading" Member="Readings">
+    <Type Name="Reading">
+      <Column Name="ReadingID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Value" Type="System.Decimal" DbType="Decimal(8,3) NOT NULL" CanBeNull="false" />
+      <Column Name="MeterID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="Meter_Reading" Member="Meter" ThisKey="MeterID" OtherKey="MeterID" Type="Meter" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rate" Member="Rates">
+    <Type Name="Rate">
+      <Column Name="RateID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Norm" Type="System.Decimal" DbType="Decimal(9,5)" CanBeNull="true" />
+      <Column Name="PriceAboveNorm" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="BeginDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="BenefitID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FlatTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ServiceID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Benefit_Rate" Member="Benefit" ThisKey="BenefitID" OtherKey="BenefitID" Type="Benefit" IsForeignKey="true" />
+      <Association Name="FlatType_Rate" Member="FlatType" ThisKey="FlatTypeID" OtherKey="FlatTypeID" Type="FlatType" IsForeignKey="true" />
+      <Association Name="Service_Rate" Member="Service" ThisKey="ServiceID" OtherKey="ServiceID" Type="Service" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Service" Member="Services">
+    <Type Name="Service">
+      <Column Name="ServiceID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ServiceTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UnitID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Service_Rate" Member="Rates" ThisKey="ServiceID" OtherKey="ServiceID" Type="Rate" />
+      <Association Name="Service_Payment" Member="Payments" ThisKey="ServiceID" OtherKey="ServiceID" Type="Payment" />
+      <Association Name="ServiceType_Service" Member="ServiceType" ThisKey="ServiceTypeID" OtherKey="ServiceTypeID" Type="ServiceType" IsForeignKey="true" />
+      <Association Name="Unit_Service" Member="Unit" ThisKey="UnitID" OtherKey="UnitID" Type="Unit" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserGroup" Member="UserGroups">
+    <Type Name="UserGroup">
+      <Column Name="UserGroupID" Type="System.Byte" DbType="TinyInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Association Name="UserGroup_User" Member="Users" ThisKey="UserGroupID" OtherKey="UserGroupID" Type="User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[User]" Member="Users">
+    <Type Name="User">
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Login" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Pass" Type="System.String" DbType="Char(64) NOT NULL" CanBeNull="false" />
+      <Column Name="Salt" Type="System.String" DbType="Char(64) NOT NULL" CanBeNull="false" />
+      <Column Name="UserGroupID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Association Name="User_Payer" Member="Payers" ThisKey="UserID" OtherKey="UserID" Type="Payer" />
+      <Association Name="UserGroup_User" Member="UserGroup" ThisKey="UserGroupID" OtherKey="UserGroupID" Type="UserGroup" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ServiceType" Member="ServiceTypes">
+    <Type Name="ServiceType">
+      <Column Name="ServiceTypeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="ServiceType_Service" Member="Services" ThisKey="ServiceTypeID" OtherKey="ServiceTypeID" Type="Service" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Street" Member="Streets">
+    <Type Name="Street">
+      <Column Name="StreetID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="StreetTypeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SettlementID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Street_House" Member="Houses" ThisKey="StreetID" OtherKey="StreetID" Type="House" />
+      <Association Name="Settlement_Street" Member="Settlement" ThisKey="SettlementID" OtherKey="SettlementID" Type="Settlement" IsForeignKey="true" />
+      <Association Name="StreetType_Street" Member="StreetType" ThisKey="StreetTypeID" OtherKey="StreetTypeID" Type="StreetType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StreetType" Member="StreetTypes">
+    <Type Name="StreetType">
+      <Column Name="StreetTypeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Suffix" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Fullname" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Association Name="StreetType_Street" Member="Streets" ThisKey="StreetTypeID" OtherKey="StreetTypeID" Type="Street" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Payer" Member="Payers">
+    <Type Name="Payer">
+      <Column Name="PayerID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="MiddleName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Sex" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="BirthDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="BenefitID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Payer_Registration" Member="Registrations" ThisKey="PayerID" OtherKey="PayerID" Type="Registration" />
+      <Association Name="Benefit_Payer" Member="Benefit" ThisKey="BenefitID" OtherKey="BenefitID" Type="Benefit" IsForeignKey="true" />
+      <Association Name="User_Payer" Member="User" ThisKey="UserID" OtherKey="UserID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Payment" Member="Payments">
+    <Type Name="Payment">
+      <Column Name="PaymentID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="TargetMonth" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="RegistrationID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ServiceID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Service_Payment" Member="Service" ThisKey="ServiceID" OtherKey="ServiceID" Type="Service" IsForeignKey="true" />
+      <Association Name="Registration_Payment" Member="Registration" ThisKey="RegistrationID" OtherKey="RegistrationID" Type="Registration" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Meter" Member="Meters">
+    <Type Name="Meter">
+      <Column Name="MeterID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RegistrationID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MeterTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Meter_Reading" Member="Readings" ThisKey="MeterID" OtherKey="MeterID" Type="Reading" />
+      <Association Name="Registration_Meter" Member="Registration" ThisKey="RegistrationID" OtherKey="RegistrationID" Type="Registration" IsForeignKey="true" />
+      <Association Name="MeterType_Meter" Member="MeterType" ThisKey="MeterTypeID" OtherKey="MeterTypeID" Type="MeterType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Registration" Member="Registrations">
+    <Type Name="Registration">
+      <Column Name="RegistrationID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FlatID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PayerID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PaymentStartDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="PaymentFinishDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="Registration_Payment" Member="Payments" ThisKey="RegistrationID" OtherKey="RegistrationID" Type="Payment" />
+      <Association Name="Registration_Meter" Member="Meters" ThisKey="RegistrationID" OtherKey="RegistrationID" Type="Meter" />
+      <Association Name="Flat_Registration" Member="Flat" ThisKey="FlatID" OtherKey="FlatID" Type="Flat" IsForeignKey="true" />
+      <Association Name="Payer_Registration" Member="Payer" ThisKey="PayerID" OtherKey="PayerID" Type="Payer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Unit" Member="Units">
+    <Type Name="Unit">
+      <Column Name="UnitID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Fullname" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(5) NOT NULL" CanBeNull="false" />
+      <Association Name="Unit_Service" Member="Services" ThisKey="UnitID" OtherKey="UnitID" Type="Service" />
+      <Association Name="Unit_MeterType" Member="MeterTypes" ThisKey="UnitID" OtherKey="UnitID" Type="MeterType" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MeterType" Member="MeterTypes">
+    <Type Name="MeterType">
+      <Column Name="MeterTypeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="UnitID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="MeterType_Meter" Member="Meters" ThisKey="MeterTypeID" OtherKey="MeterTypeID" Type="Meter" />
+      <Association Name="Unit_MeterType" Member="Unit" ThisKey="UnitID" OtherKey="UnitID" Type="Unit" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

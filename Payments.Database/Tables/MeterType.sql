@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[MeterType]
+(
+	[MeterTypeID] INT NOT NULL PRIMARY KEY IDENTITY,
+	[Name] NVARCHAR(50) NOT NULL, 
+    [UnitID] INT NOT NULL, 
+    CONSTRAINT [FK_MeterType_Unti] FOREIGN KEY (UnitID) REFERENCES Unit(UnitID)
+)

@@ -1,0 +1,38 @@
+﻿<Window xmlns:Controls="clr-namespace:PaymentsWpfApplication.Controls"
+        x:Class="PaymentsWpfApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:PaymentsWpfApplication.ViewModels"
+        xmlns:vs="clr-namespace:PaymentsWpfApplication.Screens"
+        xmlns:vc="clr-namespace:PaymentsWpfApplication.Controls"
+        mc:Ignorable="d"
+        d:DataContext="{StaticResource MainWindowVM}"
+        Title="{Binding Title}"
+        Height="600"
+        Width="800"
+        Loaded="Window_Loaded"
+        MinWidth="300"
+        MinHeight="200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Controls:MainMenu Visibility="{Binding IsMenuVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                           Margin="0,0,10,0" />
+        <Frame x:Name="frame"
+               Grid.Column="1"
+               NavigationUIVisibility="Visible"
+               IsEnabled="{Binding IsMsgBoxVisible, Converter={StaticResource negateConverter}}" />
+
+        <Controls:MessageBox x:Name="msgbox"
+                             Visibility="{Binding IsMsgBoxVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                             Grid.Column="1" />
+    </Grid>
+</Window>

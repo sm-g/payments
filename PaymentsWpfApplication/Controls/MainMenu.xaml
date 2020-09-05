@@ -1,0 +1,238 @@
+﻿<UserControl x:Class="PaymentsWpfApplication.Controls.MainMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:vm="clr-namespace:PaymentsWpfApplication.ViewModels"
+             xmlns:m="clr-namespace:Payments.Model;assembly=Payments.Model"
+             mc:Ignorable="d"
+             d:DataContext="{StaticResource MainWindowVM}"
+             d:DesignHeight="600"
+             Width="150"
+             x:Name="root">
+    <UserControl.Resources>
+
+        <sys:String x:Key="dataViewerUri">/Screens/DataViewerScreen.xaml</sys:String>
+        <sys:String x:Key="reportUri">/Screens/PayNReadReportBuilderScreen.xaml</sys:String>
+        <sys:String x:Key="avgReportUri">/Screens/AvgPayReportBuilderScreen.xaml</sys:String>
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel x:Name="menu">
+            <TreeView BorderThickness="0"
+                      x:Name="tree"
+                      ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                <TreeView.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Padding"
+                                Value="20,2,2,2" />
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Left" />
+                        <Setter Property="BorderThickness"
+                                Value="0" />
+                        <Setter Property="Width"
+                                Value="{Binding Width, ElementName=root}" />
+                    </Style>
+                    <Style TargetType="Button"
+                           x:Key="sub"
+                           BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Padding"
+                                Value="40,2,2,2" />
+                    </Style>
+                    <Style TargetType="Separator">
+                        <Setter Property="Padding"
+                                Value="2" />
+                        <Setter Property="Margin"
+                                Value="0,0,0,5" />
+                    </Style>
+
+                    <Style TargetType="StackPanel"
+                           x:Key="menuGroup">
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <TransformGroup>
+                                    <ScaleTransform />
+                                    <SkewTransform />
+                                    <RotateTransform />
+                                    <TranslateTransform X="-40" />
+                                </TransformGroup>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TreeView.Resources>
+
+                <TreeViewItem Header="Справочники"
+                              IsExpanded="True"
+                              HorizontalContentAlignment="Stretch">
+                    <StackPanel Style="{StaticResource menuGroup}">
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="города">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.Settlement}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="улицы">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.Street}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="типы улиц"
+                                Style="{StaticResource sub}">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.StreetType}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="дома">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.House}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="квартиры">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.Flat}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="типы квартир"
+                                Style="{StaticResource sub}">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.FlatType}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Separator />
+
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="услуги">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.Service}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="типы услуг"
+                                Style="{StaticResource sub}">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.ServiceType}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="единицы измерения">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.Unit}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="типы счётчиков">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.MeterType}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Separator />
+
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="тарифы">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.Rate}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="льготы">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.Benefit}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Separator />
+                    </StackPanel>
+                </TreeViewItem>
+                <TreeViewItem Header="Данные"
+                              IsExpanded="True">
+                    <StackPanel Style="{StaticResource menuGroup}">
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="счётчики">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.Meter}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="показания">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.Reading}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="оплаты">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.Payment}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Separator />
+
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="пользователи">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.User}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="плательщики">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.Payer}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Command="{Binding NavigateWithParams, Mode=OneWay}"
+                                Content="регистрации">
+                            <Button.CommandParameter>
+                                <vm:PageParams PageUri="{StaticResource dataViewerUri}"
+                                               Type="{x:Static m:Entity.Registration}" />
+                            </Button.CommandParameter>
+                        </Button>
+                        <Separator />
+                    </StackPanel>
+                </TreeViewItem>
+
+                <TreeViewItem Header="Запросы"
+                              IsExpanded="True">
+                    <StackPanel Style="{StaticResource menuGroup}">
+                        <Button Command="{Binding Navigate, Mode=OneWay}"
+                                Content="платежи и показания"
+                                CommandParameter="{StaticResource reportUri}">
+                        </Button>
+                        <Button Command="{Binding Navigate, Mode=OneWay}"
+                                Content="средняя оплата"
+                                CommandParameter="{StaticResource avgReportUri}">
+                        </Button>
+
+                        <Separator />
+                    </StackPanel>
+                </TreeViewItem>
+            </TreeView>
+
+            <TextBlock>пользователь: <TextBlock Text="{Binding Username, Mode=OneWay}" /></TextBlock>
+            <Button Command="{Binding LogOut, Mode=OneWay}"
+                    CommandParameter="/Screens/LoginScreen.xaml"
+                    Margin="0,5,0,0">
+                Выйти
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>
